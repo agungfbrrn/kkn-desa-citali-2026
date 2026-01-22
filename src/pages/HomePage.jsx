@@ -1,74 +1,144 @@
 import React from 'react';
-import { FileText, FilePenLine, CloudUpload } from 'lucide-react';
+import { FileText, FileDown, CloudUpload, Calendar, Clock, ChevronRight } from 'lucide-react';
 
 const HomePage = () => {
-    // --- LOGIKA TANGGAL OTOMATIS ---
+    // --- KONFIGURASI LINK GOOGLE DOCS (UPDATED) ---
+    
+    // 1. ID LAPORAN HARIAN
+    const FILE_ID_HARIAN   = "13cGVJtRC8PHGigAwY34bV4tobSyh0sSK"; 
+    
+    // 2. ID LAPORAN MINGGUAN (SUDAH DIISI)
+    const FILE_ID_MINGGUAN = "1MmeXameZSdb0v-qxOAAIHPgKNQwUSQx_"; 
+    
+    // -------------------------------------------------------
+
+    // Link Download Otomatis jadi .docx (Magic Link)
+    const downloadLinkHarian = `https://docs.google.com/document/d/${FILE_ID_HARIAN}/export?format=docx`;
+    const downloadLinkMingguan = `https://docs.google.com/document/d/${FILE_ID_MINGGUAN}/export?format=docx`;
+    
+    // Link Buka Google Docs Biasa (View/Edit)
+    const viewLinkHarian = `https://docs.google.com/document/d/${FILE_ID_HARIAN}/edit`;
+    const viewLinkMingguan = `https://docs.google.com/document/d/${FILE_ID_MINGGUAN}/edit`;
+
+
+    // --- LOGIKA TANGGAL & NAMA FILE ---
     const date = new Date();
     const year = date.getFullYear();
     const month = String(date.getMonth() + 1).padStart(2, '0');
     const day = String(date.getDate()).padStart(2, '0');
-
-    const dynamicFileName = `${year}-${month}-${day}_LaporanHarian_NamaLengkap_NPM.docx`;
-    // -------------------------------
+    
+    const fileNameHarian = `${year}-${month}-${day}_LaporanHarian.docx`;
+    const fileNameMingguan = `${year}-${month}_LaporanMingguan.docx`;
 
     return (
-        // REVISI: Tambahkan Wrapper div ini biar konten Home ke tengah (Center)
-        // min-h-[65vh] artinya minimal tinggi konten 65% layar, jadi dia bakal turun ke tengah
-        <div className="w-full flex flex-col items-center justify-center flex-grow min-h-[65vh]">
+        <div className="w-full flex-grow flex flex-col items-center justify-center min-h-[70vh] gap-12 px-4 relative">
+            
+            {/* Background Glow Effect */}
+            <div className="absolute top-1/2 left-1/4 w-64 h-64 bg-blue-600/10 rounded-full blur-[100px] pointer-events-none" />
+            <div className="absolute top-1/2 right-1/4 w-64 h-64 bg-purple-600/10 rounded-full blur-[100px] pointer-events-none" />
 
-            <div className="text-center mb-12 animate-fade-in-up">
-                <h1 className="text-3xl md:text-5xl font-extrabold mb-4 tracking-tight">
-                    <span className="bg-clip-text text-transparent bg-gradient-to-br from-white via-blue-100 to-slate-400 drop-shadow-[0_0_15px_rgba(255,255,255,0.1)]">
-                        Selamat Datang di Web KKN Desa Citali 2026
+            {/* HEADER SECTION */}
+            <div className="text-center space-y-4 animate-fade-in-up z-10">
+                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-slate-800 border border-slate-700 text-xs font-medium text-blue-300 mb-2 shadow-lg">
+                    <span className="relative flex h-2 w-2">
+                      <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
+                      <span className="relative inline-flex rounded-full h-2 w-2 bg-blue-500"></span>
                     </span>
+                    UNSAP 2026
+                </div>
+                <h1 className="text-4xl md:text-6xl font-black tracking-tight text-white drop-shadow-xl">
+                    KKN Desa <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-400">Citali</span>
                 </h1>
-                <p className="text-slate-400 text-lg max-w-2xl mx-auto">
-                    Informasi laporan harian & mingguan KKN Desa Citali.
+                <p className="text-slate-400 text-lg max-w-xl mx-auto leading-relaxed">
+                    Informasi format/template laporan harian & mingguan kelompok KKN Citali.
                 </p>
             </div>
 
-            <div className="grid md:grid-cols-2 gap-6 mb-16 w-full max-w-3xl">
-                {/* Kartu Google Docs (Link Baru) */}
-                <a
-                    href="https://docs.google.com/document/d/13cGVJtRC8PHGigAwY34bV4tobSyh0sSK/edit?usp=drive_link&ouid=114175576315709517860&rtpof=true&sd=true"
-                    target="_blank"
-                    rel="noreferrer"
-                    className="group relative bg-white/5 border border-blue-500/20 hover:border-blue-400/50 rounded-2xl p-8 flex items-center gap-6 transition-all duration-300 hover:bg-white/10 hover:shadow-[0_0_30px_rgba(59,130,246,0.15)] hover:-translate-y-1"
-                >
-                    <div className="p-4 bg-blue-500/20 rounded-xl group-hover:scale-110 transition-transform duration-300">
-                        <FileText className="w-8 h-8 text-blue-400" />
+            {/* GRID KARTU DOWNLOAD */}
+            <div className="grid md:grid-cols-2 gap-6 w-full max-w-5xl z-10">
+                
+                {/* --- KARTU 1: LAPORAN HARIAN (BIRU) --- */}
+                <div className="group relative bg-slate-800/50 backdrop-blur-sm border border-slate-600/50 rounded-3xl p-6 hover:border-blue-500/50 transition-all duration-300 shadow-2xl hover:shadow-blue-900/20 hover:-translate-y-1">
+                    <div className="flex items-center gap-4 mb-6 border-b border-white/10 pb-4">
+                        <div className="p-3 bg-blue-500/20 rounded-2xl text-blue-400 group-hover:scale-110 transition-transform duration-500 shadow-inner">
+                            <Clock className="w-6 h-6" />
+                        </div>
+                        <div>
+                            <h3 className="text-xl font-bold text-white">Laporan Harian</h3>
+                            <p className="text-xs text-slate-400">Wajib diisi setiap hari</p>
+                        </div>
                     </div>
-                    <div>
-                        <h3 className="text-xl font-bold text-blue-100 group-hover:text-white mb-1">Google Docs</h3>
-                        <p className="text-sm text-slate-400">Template online kolaboratif.</p>
-                    </div>
-                </a>
 
-                {/* Kartu MS Word */}
-                <a
-                    href="/template.docx"  // <-- Cukup tulis nama file pakai tanda kutip biasa
-                    download={dynamicFileName}
-                    className="group relative bg-white/5 border border-purple-500/20 hover:border-purple-400/50 rounded-2xl p-8 flex items-center gap-6 transition-all duration-300 hover:bg-white/10 hover:shadow-[0_0_30px_rgba(168,85,247,0.15)] hover:-translate-y-1 cursor-pointer"
-                >
-                    <div className="p-4 bg-purple-500/20 rounded-xl group-hover:scale-110 transition-transform duration-300">
-                        <FilePenLine className="w-8 h-8 text-purple-400" />
+                    <div className="space-y-3">
+                        {/* Tombol Lihat Google Docs */}
+                        <a href={viewLinkHarian} target="_blank" rel="noreferrer" 
+                           className="flex items-center justify-between p-4 rounded-xl bg-slate-900/50 border border-slate-700 hover:bg-blue-600/20 hover:border-blue-500/50 transition-all group/btn cursor-pointer">
+                            <div className="flex items-center gap-3">
+                                <FileText className="w-5 h-5 text-blue-400" />
+                                <span className="text-sm font-medium text-slate-200 group-hover/btn:text-white">Google Docs Template</span>
+                            </div>
+                            <ChevronRight className="w-4 h-4 text-slate-500 group-hover/btn:text-blue-400 group-hover/btn:translate-x-1 transition-transform" />
+                        </a>
+
+                        {/* Tombol Download Word */}
+                        <a href={downloadLinkHarian} 
+                           className="flex items-center justify-between p-4 rounded-xl bg-slate-900/50 border border-slate-700 hover:bg-blue-600/20 hover:border-blue-500/50 transition-all group/btn cursor-pointer">
+                            <div className="flex items-center gap-3">
+                                <FileDown className="w-5 h-5 text-blue-400" />
+                                <span className="text-sm font-medium text-slate-200 group-hover/btn:text-white">Download Word (.docx)</span>
+                            </div>
+                            <ChevronRight className="w-4 h-4 text-slate-500 group-hover/btn:text-blue-400 group-hover/btn:translate-x-1 transition-transform" />
+                        </a>
                     </div>
-                    <div>
-                        <h3 className="text-xl font-bold text-purple-100 group-hover:text-white mb-1">MS Word</h3>
-                        <p className="text-sm text-slate-400">Download format laporan harian.</p>
+                </div>
+
+                {/* --- KARTU 2: LAPORAN MINGGUAN (UNGU) --- */}
+                <div className="group relative bg-slate-800/50 backdrop-blur-sm border border-slate-600/50 rounded-3xl p-6 hover:border-purple-500/50 transition-all duration-300 shadow-2xl hover:shadow-purple-900/20 hover:-translate-y-1">
+                    <div className="flex items-center gap-4 mb-6 border-b border-white/10 pb-4">
+                        <div className="p-3 bg-purple-500/20 rounded-2xl text-purple-400 group-hover:scale-110 transition-transform duration-500 shadow-inner">
+                            <Calendar className="w-6 h-6" />
+                        </div>
+                        <div>
+                            <h3 className="text-xl font-bold text-white">Laporan Mingguan</h3>
+                            <p className="text-xs text-slate-400">Rekapitulasi kegiatan satu minggu</p>
+                        </div>
                     </div>
+
+                    <div className="space-y-3">
+                        {/* Tombol Lihat Google Docs */}
+                        <a href={viewLinkMingguan} target="_blank" rel="noreferrer" 
+                           className="flex items-center justify-between p-4 rounded-xl bg-slate-900/50 border border-slate-700 hover:bg-purple-600/20 hover:border-purple-500/50 transition-all group/btn cursor-pointer">
+                            <div className="flex items-center gap-3">
+                                <FileText className="w-5 h-5 text-purple-400" />
+                                <span className="text-sm font-medium text-slate-200 group-hover/btn:text-white">Google Docs Template</span>
+                            </div>
+                            <ChevronRight className="w-4 h-4 text-slate-500 group-hover/btn:text-purple-400 group-hover/btn:translate-x-1 transition-transform" />
+                        </a>
+
+                        {/* Tombol Download Word */}
+                        <a href={downloadLinkMingguan} 
+                           className="flex items-center justify-between p-4 rounded-xl bg-slate-900/50 border border-slate-700 hover:bg-purple-600/20 hover:border-purple-500/50 transition-all group/btn cursor-pointer">
+                            <div className="flex items-center gap-3">
+                                <FileDown className="w-5 h-5 text-purple-400" />
+                                <span className="text-sm font-medium text-slate-200 group-hover/btn:text-white">Download Word (.docx)</span>
+                            </div>
+                            <ChevronRight className="w-4 h-4 text-slate-500 group-hover/btn:text-purple-400 group-hover/btn:translate-x-1 transition-transform" />
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+
+            {/* BUTTON UPLOAD UTAMA */}
+            <div className="z-10 animate-bounce-slow">
+                <a href="https://kkn.unsap.ac.id/report/weeks/create?week=2" target="_blank" rel="noopener noreferrer" 
+                   className="group relative inline-flex items-center gap-3 px-8 py-4 bg-white text-slate-900 rounded-full font-bold text-sm shadow-[0_0_20px_rgba(255,255,255,0.3)] hover:shadow-[0_0_30px_rgba(255,255,255,0.5)] hover:scale-105 transition-all duration-300">
+                    <CloudUpload className="w-5 h-5 text-blue-600 group-hover:-translate-y-1 transition-transform" />
+                    <span>Upload Laporan ke Kampus</span>
                 </a>
             </div>
 
-            <div className="relative group">
-                <div className="absolute inset-0 bg-green-500 rounded-full blur-xl opacity-20 group-hover:opacity-40 transition-opacity duration-500" />
-                <a href="https://kkn.unsap.ac.id/report/weeks/create?week=2" target="_blank" rel="noopener noreferrer" className="relative flex items-center gap-3 px-10 py-4 bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-500 hover:to-emerald-500 text-white rounded-full font-bold text-lg shadow-lg hover:shadow-green-500/30 transition-all duration-300 transform hover:scale-105">
-                    <CloudUpload className="w-6 h-6" />
-                    <span>Upload Laporan</span>
-                </a>
-            </div>
-
-        </div> // <-- Penutup Wrapper div
+        </div>
     );
 };
 
