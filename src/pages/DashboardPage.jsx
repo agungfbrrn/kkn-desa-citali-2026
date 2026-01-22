@@ -26,7 +26,7 @@ const DashboardPage = () => {
     const daysRemaining = totalDurationDays - daysElapsed;
 
     // 4. Hitung Laporan
-    const reportsCollected = daysElapsed > 0 ? daysElapsed - 1 : 0;
+    const reportsCollected = daysElapsed;
     // -----------------------------------
 
     return (
