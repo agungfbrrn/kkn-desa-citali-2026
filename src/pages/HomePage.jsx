@@ -46,7 +46,7 @@ const HomePage = () => {
 
                 {/* Kartu MS Word */}
                 <a
-                    href="/template.docx"
+                    href="/template.docx"  // <-- Cukup tulis nama file pakai tanda kutip biasa
                     download={dynamicFileName}
                     className="group relative bg-white/5 border border-purple-500/20 hover:border-purple-400/50 rounded-2xl p-8 flex items-center gap-6 transition-all duration-300 hover:bg-white/10 hover:shadow-[0_0_30px_rgba(168,85,247,0.15)] hover:-translate-y-1 cursor-pointer"
                 >
